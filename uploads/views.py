@@ -1,7 +1,5 @@
 from django.shortcuts import render, redirect
-from django.conf import settings
 from django.core.files.storage import FileSystemStorage
-
 from uploads.models import Document
 from uploads.forms import DocumentForm
 
@@ -12,10 +10,10 @@ def home(request):
 
 
 def simple_upload(request):
-    if request.method == 'POST' and request.FILES['myfile']:
-        myfile = request.FILES['myfile']
+    if request.method == 'POST' and request.FILES['file']:
+        file = request.FILES['file']
         fs = FileSystemStorage()
-        filename = fs.save(myfile.name, myfile)
+        filename = fs.save(file.name, file)
         uploaded_file_url = fs.url(filename)
         return render(request, 'uploads/simple_upload.html', {
             'uploaded_file_url': uploaded_file_url
