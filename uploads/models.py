@@ -14,6 +14,8 @@ class Document(models.Model):
     is_processed = models.BooleanField(default=False)
 
     def digest(self):
+        self.is_processed = True
+        self.save()
         loader = TextLoader(self.document.path)
         docs = loader.load()
         text_splitter = CharacterTextSplitter(chunk_size=10, chunk_overlap=0)
@@ -25,5 +27,3 @@ class Document(models.Model):
                 embeddings,
                 connection_args={"host": "127.0.0.1", "port": "19530"},
             )
-            self.is_processed = True
-            self.save()
