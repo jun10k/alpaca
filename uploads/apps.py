@@ -1,5 +1,6 @@
+import threading
+
 from django.apps import AppConfig
-from .digest import DigestThreadPool
 
 
 class UploadsConfig(AppConfig):
@@ -7,5 +8,10 @@ class UploadsConfig(AppConfig):
     name = 'uploads'
 
     def ready(self):
-        thread_pool = DigestThreadPool()
-        thread_pool.start()
+        from .digest import DigestThreadPool
+        pool = DigestThreadPool()
+        pulling_thread = threading.Thread(target=pool.start)
+        pulling_thread.daemon = True
+        pulling_thread.start()
+
+

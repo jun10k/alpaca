@@ -14,13 +14,12 @@ class Document(models.Model):
     is_processed = models.BooleanField(default=False)
 
     def digest(self):
-        print("digesting")
         loader = TextLoader(self.document.path)
         docs = loader.load()
-        text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
+        text_splitter = CharacterTextSplitter(chunk_size=10, chunk_overlap=0)
         docs = text_splitter.split_documents(docs)
         if docs is not None and docs == []:
-            embeddings = OpenAIEmbeddings()
+            embeddings = OpenAIEmbeddings(chunk_size=1)
             vector_db = Milvus.from_documents(
                 docs,
                 embeddings,
