@@ -1,10 +1,9 @@
 from __future__ import unicode_literals
 from django.db import models
 from langchain.document_loaders import TextLoader
-from langchain.text_splitter import CharacterTextSplitter
 from langchain.embeddings.openai import OpenAIEmbeddings
+from langchain.text_splitter import CharacterTextSplitter
 from langchain.vectorstores import Milvus
-
 
 # Create your models here.
 class Document(models.Model):
@@ -17,10 +16,11 @@ class Document(models.Model):
         self.is_processed = True
         self.save()
         loader = TextLoader(self.document.path)
+        loader.encoding = "ISO8859-1"
         docs = loader.load()
         text_splitter = CharacterTextSplitter(chunk_size=10, chunk_overlap=0)
         docs = text_splitter.split_documents(docs)
-        if docs is not None and docs == []:
+        if docs is not None and docs != []:
             embeddings = OpenAIEmbeddings(chunk_size=1)
             vector_db = Milvus.from_documents(
                 docs,
