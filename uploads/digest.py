@@ -29,8 +29,8 @@ class DigestThreadPool:
 
     def start(self):
         while True:
-            doc = Document.objects.filter(is_processed=True)
-            if doc is not None:
+            docs = Document.objects.filter(is_processed=False)
+            for doc in docs:
                 self.add(doc)
                 sleep(10)
             else:

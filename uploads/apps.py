@@ -14,4 +14,3 @@ class UploadsConfig(AppConfig):
         pulling_thread.daemon = True
         pulling_thread.start()
 
-
