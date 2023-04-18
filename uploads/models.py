@@ -4,6 +4,13 @@ from langchain.document_loaders import TextLoader
 from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.text_splitter import CharacterTextSplitter
 from langchain.vectorstores import Milvus
+import os
+
+os.environ["OPENAI_API_TYPE"] = "my-name"
+os.environ["OPENAI_API_BASE"] = "https://my-site.com/"
+os.environ["OPENAI_API_KEY"] = "my-secret"
+os.environ["OPENAI_API_VERSION"] = "my-version"
+
 
 # Create your models here.
 class Document(models.Model):
@@ -18,7 +25,7 @@ class Document(models.Model):
         loader = TextLoader(self.document.path)
         loader.encoding = "ISO8859-1"
         docs = loader.load()
-        text_splitter = CharacterTextSplitter(chunk_size=10, chunk_overlap=0)
+        text_splitter = CharacterTextSplitter(chunk_size=30000, chunk_overlap=0)
         docs = text_splitter.split_documents(docs)
         if docs is not None and docs != []:
             embeddings = OpenAIEmbeddings(chunk_size=1)
