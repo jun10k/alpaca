@@ -11,5 +11,6 @@ __pycache__/
 db.sqlite3
 media
 documents
+volumes
 
 .venv

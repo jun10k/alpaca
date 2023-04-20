@@ -4,6 +4,7 @@ from langchain.document_loaders import TextLoader
 from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.text_splitter import CharacterTextSplitter
 from langchain.vectorstores import Milvus
+
 import os
 
 os.environ["OPENAI_API_TYPE"] = "azure"
@@ -34,3 +35,4 @@ class Document(models.Model):
                 embeddings,
                 connection_args={"host": "127.0.0.1", "port": "19530"},
             )
+

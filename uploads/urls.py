@@ -1,9 +1,9 @@
 from django.urls import path
 
-from .views import simple_upload, model_form_upload, home
+from .views import model_form_upload, HomePageView, AboutPageView
 
 urlpatterns = [
-    path("", home, name="home"),
-    path("uploads/simple/", simple_upload, name="simple_upload"),
+    path("", HomePageView.as_view(), name="home"),
+    path("about/", AboutPageView.as_view(), name="about"),
     path("uploads/form/", model_form_upload, name="model_form_upload"),
 ]
